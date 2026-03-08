@@ -3,7 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#071a0e">
     <title>Project Ascend</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital@0;1&display=swap');
@@ -19,6 +24,15 @@
             overflow: hidden;
             font-family: 'Crimson Text', serif;
             color: #fff;
+            touch-action: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+        }
+
+        /* Allow scrolling only inside tutorial */
+        #tutorial-screen {
+            touch-action: pan-y;
         }
 
         #game-canvas {
@@ -1023,6 +1037,9 @@
         }
 
         #tutorial-start-btn {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            min-height: 52px;
             font-family: 'Cinzel', serif;
             font-size: 13px;
             font-weight: 700;
@@ -1054,6 +1071,215 @@
             font-size: 12px;
             color: rgba(76, 255, 128, 0.35);
             letter-spacing: 1px;
+        }
+
+        /* ── MOBILE RESPONSIVE ───────────────────────────────────────────── */
+
+        /* Safe area insets for notched phones */
+        #hud {
+            padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+        }
+
+        @media (max-width: 600px) {
+
+            /* Loading screen */
+            #loading-title {
+                font-size: 22px;
+                letter-spacing: 6px;
+            }
+
+            #loading-sub {
+                font-size: 14px;
+            }
+
+            #loading-bar-wrap {
+                width: 80vw;
+            }
+
+            /* Top bar */
+            #top-bar {
+                top: 16px;
+                gap: 16px;
+            }
+
+            #title-logo {
+                font-size: 9px;
+                letter-spacing: 3px;
+                padding: 3px 10px;
+            }
+
+            #distance-display {
+                font-size: 9px;
+                letter-spacing: 2px;
+            }
+
+            /* Speed bar — move up slightly so not behind home bar */
+            #speed-bar-container {
+                bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+            }
+
+            #speed-bar {
+                width: 140px;
+            }
+
+            /* Webcam — smaller, top-right instead of bottom-right on mobile */
+            #webcam-container {
+                width: 100px;
+                height: 75px;
+                bottom: auto;
+                top: calc(60px + env(safe-area-inset-top, 0px));
+                right: 12px;
+            }
+
+            /* Heal HUD — smaller */
+            #heal-hud {
+                bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+                left: 16px;
+            }
+
+            /* Status text */
+            #status-icon {
+                font-size: 36px;
+            }
+
+            #status-text {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
+
+            #status-sub {
+                font-size: 13px;
+            }
+
+            /* Combat overlay adjustments */
+            #player-health-wrap {
+                bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+                left: 16px;
+            }
+
+            #player-health-bar {
+                width: 130px;
+            }
+
+            #combat-instruction {
+                bottom: calc(44px + env(safe-area-inset-bottom, 0px));
+                font-size: 9px;
+                letter-spacing: 2px;
+                padding: 4px 12px;
+                white-space: normal;
+                text-align: center;
+                max-width: 80vw;
+            }
+
+            #combo-display {
+                right: 16px;
+                font-size: 15px;
+                top: 35%;
+            }
+
+            #enemy-card {
+                transform: translate(-50%, -55%);
+            }
+
+            #enemy-sprite {
+                font-size: 56px;
+            }
+
+            #enemy-name {
+                font-size: 12px;
+                letter-spacing: 3px;
+            }
+
+            #enemy-health-wrap {
+                width: 160px;
+            }
+
+            #encounter-alert-inner {
+                font-size: 18px;
+                letter-spacing: 3px;
+                padding: 8px 16px;
+                border-width: 2px;
+            }
+
+            #victory-title {
+                font-size: 24px;
+                letter-spacing: 4px;
+                padding: 8px 20px;
+            }
+
+            #victory-sub {
+                font-size: 15px;
+            }
+
+            /* Tutorial screen — stack cards vertically on phone */
+            #tutorial-title {
+                font-size: 20px;
+                letter-spacing: 5px;
+            }
+
+            #tutorial-subtitle {
+                font-size: 12px;
+                margin-bottom: 16px;
+            }
+
+            #tutorial-cards {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                padding: 0 16px;
+                margin-bottom: 20px;
+            }
+
+            .tcard {
+                width: min(300px, 88vw);
+                flex-direction: row;
+                gap: 14px;
+                padding: 14px;
+                text-align: left;
+                align-items: flex-start;
+            }
+
+            .tcard::before {
+                width: 2px;
+                height: auto;
+                top: 0;
+                bottom: 0;
+                right: auto;
+                background: linear-gradient(180deg, transparent, #4cff80, transparent);
+            }
+
+            .tcard-icon,
+            .gesture-diagram {
+                min-width: 44px;
+            }
+
+            .gesture-diagram {
+                height: 44px;
+                align-items: center;
+            }
+
+            .tcard-body {
+                text-align: left;
+                font-size: 12px;
+            }
+
+            #tutorial-start-btn {
+                font-size: 11px;
+                letter-spacing: 4px;
+                padding: 14px 36px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            #loading-title {
+                font-size: 18px;
+                letter-spacing: 4px;
+            }
+
+            .tcard {
+                padding: 10px 12px;
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -1913,8 +2139,14 @@
 
             async init() {
                 try {
+                    const isMob = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
                     const stream = await navigator.mediaDevices.getUserMedia({
-                        video: { width: 320, height: 240, facingMode: 'user' }
+                        video: {
+                            width: isMob ? 256 : 320,
+                            height: isMob ? 192 : 240,
+                            facingMode: 'user',
+                            frameRate: { ideal: isMob ? 15 : 30 }
+                        }
                     });
                     this.video.srcObject = stream;
                     await new Promise(r => this.video.onloadedmetadata = r);
@@ -1924,10 +2156,16 @@
                     return false;
                 }
                 try {
+                    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
                     this.detector = await poseDetection.createDetector(
                         poseDetection.SupportedModels.MoveNet,
-                        { modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING }
+                        {
+                            modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
+                            enableSmoothing: true,   // interpolates keypoints between frames
+                            minPoseScore: 0.25,      // lower = more forgiving on mobile
+                        }
                     );
+                    this._detectInterval = isMobile ? 80 : 50; // throttle on mobile
                     console.log('✅ MoveNet ready');
                     this.overlayCanvas.width = this.video.videoWidth;
                     this.overlayCanvas.height = this.video.videoHeight;
@@ -1949,7 +2187,7 @@
                         this.updateDebug('no pose', false, 0, 'still');
                     }
                 } catch (e) { }
-                setTimeout(() => this.detect(), 50);
+                setTimeout(() => this.detect(), this._detectInterval || 50);
             }
 
             processPose(pose) {
