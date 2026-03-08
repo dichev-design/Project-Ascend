@@ -688,6 +688,24 @@
         }
 
         /* Victory banner */
+        #defeat-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 55;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            background: rgba(80, 0, 0, 0.35);
+        }
+
         #victory-banner {
             position: fixed;
             top: 0;
@@ -706,6 +724,10 @@
         }
 
         #victory-banner.show {
+            opacity: 1;
+        }
+
+        #defeat-banner.show {
             opacity: 1;
         }
 
@@ -765,10 +787,367 @@
             transform: translate(-50%, -100%);
             white-space: nowrap;
         }
+
+        /* ── TUTORIAL / START SCREEN ─────────────────────────────────────── */
+        #tutorial-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 90;
+            background: linear-gradient(180deg, #071a0e 0%, #0d3320 50%, #071a0e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+            overflow-y: auto;
+        }
+
+        #tutorial-screen.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #tutorial-title {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #4cff80, #00e5a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            margin-bottom: 4px;
+        }
+
+        #tutorial-subtitle {
+            font-family: 'Crimson Text', serif;
+            font-style: italic;
+            font-size: 15px;
+            color: rgba(100, 255, 160, 0.6);
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+        }
+
+        #tutorial-cards {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 820px;
+            padding: 0 20px;
+            margin-bottom: 32px;
+        }
+
+        .tcard {
+            width: 180px;
+            background: rgba(0, 30, 15, 0.7);
+            border: 1px solid rgba(20, 255, 100, 0.2);
+            border-radius: 8px;
+            padding: 20px 14px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tcard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4cff80, transparent);
+        }
+
+        .tcard-icon {
+            font-size: 36px;
+            line-height: 1;
+            filter: drop-shadow(0 0 10px rgba(76, 255, 128, 0.4));
+        }
+
+        .tcard-step {
+            font-family: 'Courier New', monospace;
+            font-size: 8px;
+            letter-spacing: 3px;
+            color: rgba(76, 255, 128, 0.4);
+            text-transform: uppercase;
+        }
+
+        .tcard-title {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #4cff80;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .tcard-body {
+            font-family: 'Crimson Text', serif;
+            font-size: 13px;
+            color: rgba(200, 255, 220, 0.75);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .tcard-key {
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            background: rgba(76, 255, 128, 0.1);
+            border: 1px solid rgba(76, 255, 128, 0.25);
+            border-radius: 3px;
+            padding: 2px 8px;
+            color: #4cff80;
+            letter-spacing: 2px;
+        }
+
+        /* Visual gesture diagram inside card */
+        .gesture-diagram {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 48px;
+            justify-content: center;
+        }
+
+        .gesture-stick {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            position: relative;
+        }
+
+        .stick-head {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #4cff80;
+            box-shadow: 0 0 6px #4cff80;
+        }
+
+        .stick-body {
+            width: 2px;
+            height: 18px;
+            background: #4cff80;
+        }
+
+        .stick-arm-up {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            width: 14px;
+            height: 2px;
+            background: #ffdd44;
+            transform-origin: left center;
+            transform: translateY(-50%) rotate(-80deg);
+            box-shadow: 0 0 4px #ffdd44;
+        }
+
+        .stick-arm-up.right {
+            left: auto;
+            right: 50%;
+            transform-origin: right center;
+            transform: translateY(-50%) rotate(80deg);
+        }
+
+        .stick-arm-rest {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            width: 12px;
+            height: 2px;
+            background: rgba(76, 255, 128, 0.5);
+            transform-origin: left center;
+            transform: translateY(-50%) rotate(-30deg);
+        }
+
+        .stick-arm-rest.right {
+            left: auto;
+            right: 50%;
+            transform-origin: right center;
+            transform: translateY(-50%) rotate(30deg);
+        }
+
+        .stick-leg-up {
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 12px;
+            height: 2px;
+            background: #4cff80;
+            transform-origin: left center;
+            transform: rotate(-60deg);
+            box-shadow: 0 0 4px rgba(76, 255, 128, 0.6);
+        }
+
+        .stick-leg-down {
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 12px;
+            height: 2px;
+            background: rgba(76, 255, 128, 0.4);
+            transform-origin: left center;
+            transform: rotate(-10deg);
+        }
+
+        .stick-curl-arm {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            width: 14px;
+            height: 2px;
+            background: #44ff88;
+            transform-origin: left center;
+            transform: translateY(-50%) rotate(-120deg);
+            box-shadow: 0 0 4px #44ff88;
+        }
+
+        .stick-curl-arm.right {
+            left: auto;
+            right: 50%;
+            transform-origin: right center;
+            transform: translateY(-50%) rotate(120deg);
+        }
+
+        #tutorial-start-btn {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: #071a0e;
+            background: linear-gradient(135deg, #4cff80, #00e5a0);
+            border: none;
+            border-radius: 4px;
+            padding: 14px 48px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(76, 255, 128, 0.4), 0 4px 16px rgba(0, 0, 0, 0.4);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            margin-bottom: 12px;
+        }
+
+        #tutorial-start-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 50px rgba(76, 255, 128, 0.7), 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #tutorial-start-btn:active {
+            transform: scale(0.97);
+        }
+
+        #tutorial-kb-hint {
+            font-family: 'Crimson Text', serif;
+            font-style: italic;
+            font-size: 12px;
+            color: rgba(76, 255, 128, 0.35);
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 
 <body>
+
+
+    <!-- ── TUTORIAL / START SCREEN ──────────────────────────────────────── -->
+    <div id="tutorial-screen">
+        <div id="tutorial-title">Project Ascend</div>
+        <div id="tutorial-subtitle">A fitness adventure — your body is the controller</div>
+
+        <div id="tutorial-cards">
+
+            <!-- Card 1: Walk -->
+            <div class="tcard">
+                <div class="tcard-step">Step 01</div>
+                <div class="gesture-diagram">
+                    <div class="gesture-stick">
+                        <div class="stick-head"></div>
+                        <div class="stick-body"></div>
+                        <div class="stick-leg-up"></div>
+                        <div class="stick-leg-down" style="transform:rotate(-10deg) scaleX(-1)"></div>
+                    </div>
+                </div>
+                <div class="tcard-title">Walk in Place</div>
+                <div class="tcard-body">Raise your knees alternately to move through the world. Faster = jogging speed.
+                </div>
+                <div class="tcard-key">MARCH IN PLACE</div>
+            </div>
+
+            <!-- Card 2: Enemy encounter -->
+            <div class="tcard">
+                <div class="tcard-step">Step 02</div>
+                <div class="tcard-icon">⚠️</div>
+                <div class="tcard-title">Enemy Ahead</div>
+                <div class="tcard-body">A bandit will appear on the road. The world stops — combat begins automatically.
+                </div>
+                <div class="tcard-key">STAY READY</div>
+            </div>
+
+            <!-- Card 3: Overhead press attack -->
+            <div class="tcard">
+                <div class="tcard-step">Step 03</div>
+                <div class="gesture-diagram">
+                    <div class="gesture-stick">
+                        <div class="stick-head"></div>
+                        <div class="stick-body"></div>
+                        <div class="stick-arm-up" style="background:#ffdd44;box-shadow:0 0 6px #ffdd44"></div>
+                        <div class="stick-arm-up right" style="background:#ffdd44;box-shadow:0 0 6px #ffdd44"></div>
+                        <div class="stick-leg-down"></div>
+                        <div class="stick-leg-down" style="transform:rotate(-10deg) scaleX(-1)"></div>
+                    </div>
+                </div>
+                <div class="tcard-title">Overhead Press</div>
+                <div class="tcard-body">Raise your wrists above your shoulders to attack. Alternate arms fast for combo
+                    damage.</div>
+                <div class="tcard-key">RAISE WRISTS UP</div>
+            </div>
+
+            <!-- Card 4: Bicep curl heal -->
+            <div class="tcard">
+                <div class="tcard-step">Step 04</div>
+                <div class="gesture-diagram">
+                    <div class="gesture-stick">
+                        <div class="stick-head"></div>
+                        <div class="stick-body"></div>
+                        <div class="stick-curl-arm" style="background:#44ff88;box-shadow:0 0 6px #44ff88"></div>
+                        <div class="stick-curl-arm right" style="background:#44ff88;box-shadow:0 0 6px #44ff88"></div>
+                        <div class="stick-leg-down"></div>
+                        <div class="stick-leg-down" style="transform:rotate(-10deg) scaleX(-1)"></div>
+                    </div>
+                </div>
+                <div class="tcard-title">Bicep Curl</div>
+                <div class="tcard-body">Curl your arms to restore HP. Works before, during, and after combat. +8 HP per
+                    rep.</div>
+                <div class="tcard-key">CURL TO HEAL</div>
+            </div>
+
+            <!-- Card 5: Camera tip -->
+            <div class="tcard">
+                <div class="tcard-step">Tip</div>
+                <div class="tcard-icon">📷</div>
+                <div class="tcard-title">Camera Setup</div>
+                <div class="tcard-body">Stand 1.5–2m from your webcam. Your full body — head to knees — should be
+                    visible.</div>
+                <div class="tcard-key">FULL BODY IN FRAME</div>
+            </div>
+
+        </div>
+
+        <button id="tutorial-start-btn" onclick="startGame()">▶ Begin Adventure</button>
+        <div id="tutorial-kb-hint">No camera? Press SPACE to walk in keyboard mode</div>
+    </div>
 
     <div id="loading">
         <div id="loading-title">Project Ascend</div>
@@ -801,6 +1180,47 @@
                 <div id="speed-fill"></div>
             </div>
             <div id="pace-text"></div>
+        </div>
+
+        <!-- Curl / Heal HUD — bottom left, only visible when healing is available -->
+        <div id="heal-hud" style="
+            position:absolute; bottom:40px; left:32px;
+            display:flex; flex-direction:column; gap:6px;
+            opacity:0; transition:opacity 0.4s ease; pointer-events:none;
+        ">
+            <div style="
+                font-family:'Courier New',monospace; font-size:9px; letter-spacing:3px;
+                color:#44ff88; text-transform:uppercase;
+                text-shadow:0 0 6px rgba(68,255,136,0.5);
+            ">❤ Heal · Curl Arms</div>
+            <!-- HP bar -->
+            <div style="
+                width:140px; height:10px; background:rgba(0,0,0,0.5);
+                border:2px solid rgba(68,255,136,0.4); border-radius:0; overflow:hidden;
+            ">
+                <div id="heal-hp-fill" style="
+                    height:100%; width:100%;
+                    background:repeating-linear-gradient(90deg,#22dd66 0px,#11bb44 4px,#33ee77 4px,#22cc55 8px);
+                    transition:width 0.3s ease;
+                    box-shadow:0 0 6px rgba(50,220,100,0.7);
+                "></div>
+            </div>
+            <!-- Curl rep counter -->
+            <div style="display:flex; align-items:center; gap:6px;">
+                <div style="
+                    font-family:'Courier New',monospace; font-size:9px;
+                    color:rgba(68,255,136,0.5); letter-spacing:2px;
+                ">REPS</div>
+                <div id="curl-rep-count" style="
+                    font-family:'Courier New',monospace; font-size:16px; font-weight:bold;
+                    color:#44ff88; text-shadow:0 0 8px rgba(68,255,136,0.6);
+                    min-width:24px;
+                ">0</div>
+                <div id="curl-arm-indicator" style="
+                    font-family:'Courier New',monospace; font-size:9px;
+                    color:rgba(68,255,136,0.35); letter-spacing:1px;
+                "></div>
+            </div>
         </div>
         <div id="webcam-container">
             <video id="webcam" autoplay playsinline muted></video>
@@ -840,6 +1260,15 @@
 
         <div id="combo-display">x2 COMBO!</div>
         <div id="combat-instruction">PUNCH to attack — raise your fists!</div>
+    </div>
+
+    <div id="defeat-banner">
+        <div
+            style="font-family:'Courier New',monospace;font-size:32px;font-weight:900;letter-spacing:8px;color:#ff3333;text-transform:uppercase;text-shadow:3px 3px 0 #000,0 0 30px rgba(255,50,50,0.8);border:3px solid #ff3333;background:rgba(0,0,0,0.82);padding:12px 30px;">
+            ✖ DEFEATED</div>
+        <div
+            style="font-family:'Courier New',monospace;font-size:13px;letter-spacing:3px;color:#ff8888;text-shadow:1px 1px 0 #000;margin-top:8px;">
+            Curl your arms to recover HP and fight again</div>
     </div>
 
     <div id="victory-banner">
@@ -1479,6 +1908,7 @@
                 this.RAISE_THRESHOLD_RATIO = 0.04;
 
                 this.smoothSpeed = 0;
+                this._curlState = null; // set by onPoseUpdate
             }
 
             async init() {
@@ -1728,9 +2158,135 @@
                     }
                 }
                 ctx.setLineDash([]);
+
+                // ── CURL ARC OVERLAY ─────────────────────────────────────────────
+                // In running mode: draw elbow angle arcs showing curl progress
+                if (!inCombat && this._curlState) {
+                    const cs = this._curlState;
+                    [
+                        { s: kp['left_shoulder'], e: kp['left_elbow'], w: kp['left_wrist'], state: cs.leftState, angle: cs.leftAngle },
+                        { s: kp['right_shoulder'], e: kp['right_elbow'], w: kp['right_wrist'], state: cs.rightState, angle: cs.rightAngle },
+                    ].forEach(({ s, e, w, state, angle }) => {
+                        if (!s || !e || !w || s.score < 0.3 || e.score < 0.3 || w.score < 0.3 || angle === null) return;
+                        const ex = e.x * sx, ey = e.y * sy;
+                        const isCurled = state === 'curled';
+                        const t = 1 - Math.max(0, Math.min(1, (angle - 35) / 125));
+                        ctx.strokeStyle = isCurled ? 'rgba(68,255,136,0.95)' : 'rgba(68,255,136,0.25)';
+                        ctx.lineWidth = 2.5;
+                        ctx.beginPath();
+                        ctx.arc(ex, ey, 14, -Math.PI * 0.9, -Math.PI * 0.9 + t * Math.PI * 1.2);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.arc(ex, ey, isCurled ? 5 : 3, 0, Math.PI * 2);
+                        ctx.fillStyle = isCurled ? '#44ff88' : 'rgba(68,255,136,0.4)';
+                        ctx.fill();
+                        if (isCurled) {
+                            ctx.strokeStyle = 'rgba(68,255,136,0.3)'; ctx.lineWidth = 1;
+                            ctx.beginPath(); ctx.arc(ex, ey, 19, 0, Math.PI * 2); ctx.stroke();
+                        }
+                    });
+                }
             }
         }
 
+
+
+        // ── CURL DETECTOR ─────────────────────────────────────────────────────────
+        // Detects bicep curls from front-facing camera using elbow flexion angle.
+        //
+        // METHOD: Three-point angle at the elbow — shoulder → elbow → wrist.
+        // Straight arm ≈ 160°, full curl ≈ 35°.
+        // One rep = angle drops below CURL_THRESHOLD (curled) then rises above
+        // EXTEND_THRESHOLD (extended) = DOWN transition counts the rep.
+        //
+        // Works front-facing because even in 2D projection the wrist travels
+        // a large arc (hip height → shoulder height) that's clearly measurable.
+        // Per-arm cooldown prevents counting the same contraction twice.
+        // Minimum 2 reps before triggering heal so accidental triggers don't heal.
+        //
+        class CurlDetector {
+            constructor() {
+                this.CURL_THRESHOLD = 80;   // degrees — arm considered curled
+                this.EXTEND_THRESHOLD = 140;  // degrees — arm considered extended
+                this.COOLDOWN_MS = 400;  // min ms between reps per arm
+                this.MIN_SCORE = 0.35; // keypoint confidence minimum
+
+                this.leftState = 'extended'; // 'curled' | 'extended'
+                this.rightState = 'extended';
+                this.leftLastRep = 0;
+                this.rightLastRep = 0;
+
+                this.totalReps = 0;
+                this.onRep = null; // callback(side) — called each completed rep
+            }
+
+            // angle in degrees at joint B, formed by points A-B-C
+            _angle(A, B, C) {
+                const ax = A.x - B.x, ay = A.y - B.y;
+                const cx = C.x - B.x, cy = C.y - B.y;
+                const dot = ax * cx + ay * cy;
+                const magA = Math.sqrt(ax * ax + ay * ay);
+                const magC = Math.sqrt(cx * cx + cy * cy);
+                if (magA < 0.001 || magC < 0.001) return 180;
+                return Math.acos(Math.max(-1, Math.min(1, dot / (magA * magC)))) * (180 / Math.PI);
+            }
+
+            update(kp) {
+                const now = Date.now();
+
+                const ls = kp['left_shoulder'], rs = kp['right_shoulder'];
+                const le = kp['left_elbow'], re = kp['right_elbow'];
+                const lw = kp['left_wrist'], rw = kp['right_wrist'];
+
+                // LEFT arm
+                if (ls && le && lw &&
+                    ls.score > this.MIN_SCORE &&
+                    le.score > this.MIN_SCORE &&
+                    lw.score > this.MIN_SCORE) {
+
+                    const lAngle = this._angle(ls, le, lw);
+
+                    if (lAngle < this.CURL_THRESHOLD) {
+                        this.leftState = 'curled';
+                    } else if (lAngle > this.EXTEND_THRESHOLD && this.leftState === 'curled') {
+                        // DOWN transition — rep complete
+                        if (now - this.leftLastRep > this.COOLDOWN_MS) {
+                            this.leftLastRep = now;
+                            this.totalReps++;
+                            if (this.onRep) this.onRep('left', lAngle, this.totalReps);
+                        }
+                        this.leftState = 'extended';
+                    }
+                }
+
+                // RIGHT arm
+                if (rs && re && rw &&
+                    rs.score > this.MIN_SCORE &&
+                    re.score > this.MIN_SCORE &&
+                    rw.score > this.MIN_SCORE) {
+
+                    const rAngle = this._angle(rs, re, rw);
+
+                    if (rAngle < this.CURL_THRESHOLD) {
+                        this.rightState = 'curled';
+                    } else if (rAngle > this.EXTEND_THRESHOLD && this.rightState === 'curled') {
+                        if (now - this.rightLastRep > this.COOLDOWN_MS) {
+                            this.rightLastRep = now;
+                            this.totalReps++;
+                            if (this.onRep) this.onRep('right', rAngle, this.totalReps);
+                        }
+                        this.rightState = 'extended';
+                    }
+                }
+
+                return {
+                    leftAngle: (ls && le && lw && le.score > 0.3) ? this._angle(ls, le, lw) : null,
+                    rightAngle: (rs && re && rw && re.score > 0.3) ? this._angle(rs, re, rw) : null,
+                    leftState: this.leftState,
+                    rightState: this.rightState,
+                };
+            }
+        }
 
         // ── KEYBOARD FALLBACK ─────────────────────────
         class KeyboardFallback {
@@ -1802,6 +2358,12 @@
                 this.combo = 0;
                 this.lastStrikeTime = 0;
                 this.COMBO_WINDOW = 1500;
+
+                // ── ENEMY ATTACK ────────────────────────────────────────────
+                this.ATTACK_INTERVAL_MS = 2000;
+                this.ATTACK_DAMAGE = 15;
+                this._atkTimer = null;
+                this._atkRunning = false;
 
                 this.onStateChange = null;
                 this.sound = null; // set by main()
@@ -1936,6 +2498,102 @@
                 if (this.enemyHP <= 0) setTimeout(() => this.triggerVictory(), 400);
             }
 
+            // ── ENEMY ATTACK LOOP ─────────────────────────────────────────────────
+            startEnemyAttacks() {
+                this.stopEnemyAttacks();
+                this._atkRunning = true;
+                console.log('⚔️ startEnemyAttacks called, scheduling first tick');
+                // Fire first attack after 1 second, then repeat
+                const schedule = () => {
+                    if (!this._atkRunning) return;
+                    this._atkTimer = setTimeout(() => {
+                        if (!this._atkRunning || this.state !== 'combat') return;
+                        this._enemyTick();
+                        schedule(); // reschedule next
+                    }, this.ATTACK_INTERVAL_MS);
+                };
+                schedule();
+            }
+
+            stopEnemyAttacks() {
+                this._atkRunning = false;
+                if (this._atkTimer) { clearTimeout(this._atkTimer); this._atkTimer = null; }
+                console.log('⚔️ stopEnemyAttacks called');
+            }
+
+            _enemyTick() {
+                console.log('⚔️ _enemyTick FIRED — state=', this.state, 'playerHP=', this.playerHP);
+                if (this.state !== 'combat') return;
+
+                // ── Warning glow on enemy sprite ──────────────────────────────────
+                const img = this.enemySpriteEl.querySelector('img') || this.enemySpriteEl;
+                img.style.filter = 'drop-shadow(0 0 28px rgba(255,0,0,1)) brightness(1.6)';
+                this.instrEl.textContent = '⚡ INCOMING — keep striking!';
+                this.instrEl.style.color = '#ff4444';
+                if (this.sound && this.sound.playAttackWarning) this.sound.playAttackWarning();
+
+                // Damage lands after 500ms
+                setTimeout(() => {
+                    if (this.state !== 'combat') return;
+
+                    // Reset sprite filter
+                    img.style.filter = 'drop-shadow(0 0 16px rgba(180,80,255,0.8))';
+                    this.instrEl.textContent = '💪 RAISE your arms to attack!';
+                    this.instrEl.style.color = 'rgba(255,255,255,0.7)';
+
+                    // Deal damage
+                    this.playerHP = Math.max(0, this.playerHP - this.ATTACK_DAMAGE);
+                    console.log('💥 Enemy dealt', this.ATTACK_DAMAGE, 'damage. Player HP:', this.playerHP);
+
+                    // Update HP bar
+                    const pct = (this.playerHP / this.playerMaxHP) * 100;
+                    this.playerHPFill.style.width = pct + '%';
+                    this.playerHPText.textContent = Math.round(this.playerHP) + ' / ' + this.playerMaxHP;
+
+                    // Colour shift
+                    if (pct <= 30) this.playerHPFill.style.background = 'repeating-linear-gradient(90deg,#cc1100 0px,#aa0800 4px,#dd2211 4px,#bb1100 8px)';
+                    else if (pct <= 60) this.playerHPFill.style.background = 'repeating-linear-gradient(90deg,#dd6600 0px,#bb4400 4px,#ee7711 4px,#cc5500 8px)';
+                    else this.playerHPFill.style.background = 'repeating-linear-gradient(90deg,#22dd66 0px,#11bb44 4px,#33ee77 4px,#22cc55 8px)';
+
+                    // Red screen flash
+                    const flash = document.getElementById('punch-flash');
+                    flash.style.background = 'rgba(200,0,0,0.25)';
+                    flash.classList.add('flash');
+                    setTimeout(() => { flash.classList.remove('flash'); flash.style.background = ''; }, 150);
+
+                    // Floating -HP number
+                    const dmgEl = document.createElement('div');
+                    dmgEl.textContent = '-' + this.ATTACK_DAMAGE + ' HP';
+                    dmgEl.style.cssText = 'position:fixed;z-index:70;pointer-events:none;font-family:"Courier New",monospace;font-weight:bold;font-size:18px;color:#ff3333;text-shadow:2px 2px 0 #000;left:60px;bottom:160px;--tx:0px;--ty:-50px;animation:particleBurst 1s ease-out forwards;';
+                    document.body.appendChild(dmgEl);
+                    setTimeout(() => dmgEl.remove(), 1100);
+
+                    if (this.sound) this.sound.playPlayerHit();
+
+                    // Death check
+                    if (this.playerHP <= 0) this.triggerDefeat();
+                }, 500);
+            }
+
+            triggerDefeat() {
+                this.stopEnemyAttacks();
+                if (window._enemyAttackInterval) { clearInterval(window._enemyAttackInterval); window._enemyAttackInterval = null; }
+                this.state = 'defeat';
+                this.overlayEl.classList.remove('active');
+                this.aimEl.classList.remove('visible');
+                const banner = document.getElementById('defeat-banner');
+                if (banner) banner.classList.add('show');
+                if (this.sound) this.sound.toAmbience();
+                if (this.activeEnemy3D) { this.world.scene.remove(this.activeEnemy3D); this.activeEnemy3D = null; }
+                if (this.onStateChange) this.onStateChange('defeat');
+                setTimeout(() => {
+                    if (banner) banner.classList.remove('show');
+                    this.playerHP = 1; // barely alive — curl to recover
+                    this.state = 'running';
+                    if (this.onStateChange) this.onStateChange('running');
+                }, 3000);
+            }
+
             updateEnemyHP() {
                 const pct = this.enemyHP / this.enemyMaxHP * 100;
                 this.enemyHPFill.style.width = pct + '%';
@@ -2034,7 +2692,7 @@
                 const def = this.currentEnemy;
                 this.enemyHP = def.hp;
                 this.enemyMaxHP = def.hp;
-                this.playerHP = this.playerMaxHP;
+                // HP persists across fights — do not reset
                 this.combo = 0;
                 this.leftArmState = 'down';
                 this.rightArmState = 'down';
@@ -2052,8 +2710,9 @@
                     this.enemySpriteEl.textContent = def.sprite;
                 }
                 this.updateEnemyHP();
-                this.playerHPFill.style.width = '100%';
-                this.playerHPText.textContent = '100 / 100';
+                const _initPct = (this.playerHP / this.playerMaxHP) * 100;
+                this.playerHPFill.style.width = _initPct + '%';
+                this.playerHPText.textContent = Math.round(this.playerHP) + ' / ' + this.playerMaxHP;
                 this.instrEl.textContent = '💪 RAISE your arms to attack!';
                 this.instrEl.style.color = 'rgba(255,255,255,0.7)';
 
@@ -2062,9 +2721,66 @@
 
                 if (this.activeEnemy3D) { this.world.scene.remove(this.activeEnemy3D); this.activeEnemy3D = null; }
                 if (this.onStateChange) this.onStateChange('combat');
+
+                // ── RAW ATTACK INTERVAL — stored on window to survive any scoping issue ──
+                if (window._enemyAttackInterval) clearInterval(window._enemyAttackInterval);
+                const _combat = this;
+                console.log('COMBAT START — setting up attack interval');
+                window._enemyAttackInterval = setInterval(() => {
+                    console.log('ATTACK TICK — state:', _combat.state, 'HP:', _combat.playerHP);
+                    if (_combat.state !== 'combat') {
+                        clearInterval(window._enemyAttackInterval);
+                        window._enemyAttackInterval = null;
+                        console.log('ATTACK STOPPED — state changed to', _combat.state);
+                        return;
+                    }
+                    // Deal damage
+                    _combat.playerHP = Math.max(0, _combat.playerHP - 15);
+                    console.log('DAMAGE DEALT — new HP:', _combat.playerHP);
+
+                    // Update HP bar directly
+                    const pct = (_combat.playerHP / _combat.playerMaxHP) * 100;
+                    const fill = document.getElementById('player-health-fill');
+                    const txt = document.getElementById('player-health-text');
+                    fill.style.transition = 'none';
+                    fill.style.width = pct + '%';
+                    fill.style.background = pct <= 30 ? '#ff2222' : pct <= 60 ? '#ff8800' : '#22dd66';
+                    txt.textContent = Math.round(_combat.playerHP) + ' / ' + _combat.playerMaxHP;
+
+                    // Red flash
+                    const flash = document.getElementById('punch-flash');
+                    flash.style.background = 'rgba(200,0,0,0.3)';
+                    flash.classList.add('flash');
+                    setTimeout(() => { flash.classList.remove('flash'); flash.style.background = ''; }, 200);
+
+                    // Glow enemy sprite red
+                    const img = document.querySelector('#enemy-sprite img') || document.getElementById('enemy-sprite');
+                    img.style.filter = 'brightness(2) saturate(2) hue-rotate(0deg) drop-shadow(0 0 20px red)';
+                    setTimeout(() => { img.style.filter = ''; }, 300);
+
+                    // Floating damage
+                    const dmg = document.createElement('div');
+                    dmg.textContent = '-15 HP';
+                    dmg.style.cssText = 'position:fixed;bottom:150px;left:50px;z-index:999;font-size:22px;font-weight:bold;color:#ff3333;text-shadow:2px 2px 0 #000;pointer-events:none;transition:all 1s ease;';
+                    document.body.appendChild(dmg);
+                    setTimeout(() => { dmg.style.transform = 'translateY(-40px)'; dmg.style.opacity = '0'; }, 50);
+                    setTimeout(() => dmg.remove(), 1100);
+
+                    // Play hit sound
+                    if (_combat.sound) _combat.sound.playPlayerHit();
+
+                    // Death
+                    if (_combat.playerHP <= 0) {
+                        clearInterval(window._enemyAttackInterval);
+                        window._enemyAttackInterval = null;
+                        _combat.triggerDefeat();
+                    }
+                }, 2000);
             }
 
             triggerVictory() {
+                this.stopEnemyAttacks();
+                if (window._enemyAttackInterval) { clearInterval(window._enemyAttackInterval); window._enemyAttackInterval = null; }
                 this.state = 'victory';
                 this.overlayEl.classList.remove('active');
                 this.aimEl.classList.remove('visible');
@@ -2121,20 +2837,83 @@
             const combat = new CombatManager(world);
             combat.sound = sound;
 
-            // Wire pose data into combat manager
-            walker.onPoseUpdate = (kp) => combat.updatePose(kp);
+            // ── Curl detector + heal system ──────────────────────────────────
+            const curler = new CurlDetector();
+            const HEAL_PER_REP = 8;   // HP restored per completed curl rep
+            const MAX_PLAYER_HP = 100;
+            const healHud = document.getElementById('heal-hud');
+            const healHpFill = document.getElementById('heal-hp-fill');
+            const curlRepCount = document.getElementById('curl-rep-count');
+            const curlArmInd = document.getElementById('curl-arm-indicator');
+            let sessionCurls = 0;
+
+            curler.onRep = (side, angle, total) => {
+                // Heal any time HP is below max — running, combat, or defeat
+                if (combat.playerHP >= MAX_PLAYER_HP) return;
+
+                sessionCurls++;
+                curlRepCount.textContent = sessionCurls;
+                curlArmInd.textContent = side.toUpperCase() + ' ✓';
+                setTimeout(() => { curlArmInd.textContent = ''; }, 600);
+
+                // Heal player HP
+                const oldHP = combat.playerHP;
+                combat.playerHP = Math.min(MAX_PLAYER_HP, combat.playerHP + HEAL_PER_REP);
+                const healed = combat.playerHP - oldHP;
+
+                if (healed > 0) {
+                    // Update player HP bar (uses same fill element as combat overlay)
+                    const pct = (combat.playerHP / MAX_PLAYER_HP) * 100;
+                    const fill = document.getElementById('player-health-fill');
+                    if (fill) fill.style.width = pct + '%';
+                    const txt = document.getElementById('player-health-text');
+                    if (txt) txt.textContent = combat.playerHP + ' / ' + MAX_PLAYER_HP;
+
+                    // Floating +HP particle
+                    Particles.heal(healed);
+
+                    // Heal sound
+                    if (sound) sound.playHeal();
+
+                    // Flash heal hud green briefly
+                    healHud.style.filter = 'brightness(2)';
+                    setTimeout(() => { healHud.style.filter = ''; }, 150);
+                }
+
+                // Update HP bar in HUD
+                healHpFill.style.width = (combat.playerHP / MAX_PLAYER_HP * 100) + '%';
+
+                console.log('💪 Curl rep ' + total + ' (' + side + ') angle=' + Math.round(angle) + '° HP=' + combat.playerHP);
+            };
+
+            // Show/hide heal HUD based on game state
+            const updateHealHudVisibility = () => {
+                const show = combat.playerHP < MAX_PLAYER_HP;
+                healHud.style.opacity = show ? '1' : '0';
+            };
+
+            // Wire pose data into combat manager AND curl detector
+            walker.onPoseUpdate = (kp) => {
+                combat.updatePose(kp);
+                const curlResult = curler.update(kp);
+                // Visual feedback in skeleton: highlight arm being curled
+                walker._curlState = curlResult;
+            };
             walker._combatMgr = combat;
 
             // State change: sync skeleton mode + HUD
             combat.onStateChange = (state) => {
                 walker._combatState = state;
+                keyboard._combatState = state;
                 if (state === 'combat') {
                     speedFill.style.width = '0%';
                     paceText.textContent = '';
                     statusEl.classList.add('hidden');
+                    healHud.style.opacity = '0';
                 }
-                if (state === 'running') {
+                if (state === 'running' || state === 'victory') {
                     handleSpeed(0.3);
+                    updateHealHudVisibility();
                 }
             };
 
@@ -2144,11 +2923,25 @@
             loadingEl.style.opacity = '0';
             setTimeout(() => loadingEl.style.display = 'none', 800);
 
-            if (!camOk) {
-                statusText.textContent = 'Press SPACE to walk';
-                statusSub.textContent = 'keyboard mode active';
-                statusIcon.textContent = '⌨️';
-            }
+            // ── Show tutorial screen ──────────────────────────────────────────────
+            const tutorialEl = document.getElementById('tutorial-screen');
+            setTimeout(() => tutorialEl.classList.add('show'), 900);
+
+            // startGame() is called by the Start button
+            let gameStarted = false;
+            window.startGame = () => {
+                if (gameStarted) return;
+                gameStarted = true;
+                tutorialEl.style.opacity = '0';
+                tutorialEl.style.pointerEvents = 'none';
+                setTimeout(() => { tutorialEl.style.display = 'none'; }, 700);
+                sound.start();
+                if (!camOk) {
+                    statusText.textContent = 'Press SPACE to walk';
+                    statusSub.textContent = 'keyboard mode active';
+                    statusIcon.textContent = '⌨️';
+                }
+            };
 
             let currentSpeed = 0;
 
@@ -2177,8 +2970,8 @@
                 }
             }
 
-            walker.onSpeedUpdate = (intensity) => { if (intensity > 0.05) sound.start(); handleSpeed(intensity); };
-            keyboard.onSpeedUpdate = (intensity) => { sound.start(); handleSpeed(intensity); };
+            walker.onSpeedUpdate = (intensity) => { if (!gameStarted) return; if (intensity > 0.05) sound.start(); handleSpeed(intensity); };
+            keyboard.onSpeedUpdate = (intensity) => { if (!gameStarted) return; sound.start(); handleSpeed(intensity); };
 
             // ── Game loop ──
             setInterval(() => {
@@ -2192,6 +2985,11 @@
                 if (combat.state === 'running' && currentSpeed > 0.1 && Math.random() < 0.15) {
                     Particles.leaf();
                 }
+
+                // Keep heal HUD in sync every tick
+                updateHealHudVisibility();
+                healHpFill.style.width = (combat.playerHP / MAX_PLAYER_HP * 100) + '%';
+                curlRepCount.textContent = sessionCurls;
 
                 // Enemy spawn check
                 if (combat.state === 'running' || combat.state === 'spawned') {
@@ -2384,6 +3182,24 @@
                 o2.start(now + 0.06); o2.stop(now + 0.25);
             }
 
+
+            // ── HEAL SOUND — warm rising chime ───────────────────────────────────
+            playHeal() {
+                if (!this.ctx) return;
+                const ctx = this.ctx; const out = this.masterGain;
+                const notes = [392, 523.2, 659.2];
+                notes.forEach((freq, i) => {
+                    const t = ctx.currentTime + i * 0.08;
+                    const o = ctx.createOscillator(); const g = ctx.createGain();
+                    o.type = 'sine'; o.frequency.value = freq;
+                    g.gain.setValueAtTime(0, t);
+                    g.gain.linearRampToValueAtTime(0.12, t + 0.04);
+                    g.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
+                    o.connect(g); g.connect(out);
+                    o.start(t); o.stop(t + 0.4);
+                });
+            }
+
             // ── VICTORY STING ─────────────────────────────────────────────────────
             playVictory() {
                 if (!this.ctx) return;
@@ -2447,6 +3263,30 @@
                     document.body.appendChild(el);
                     setTimeout(() => el.remove(), 1200);
                 }
+            },
+
+            // Rising +HP heal number
+            heal(amount) {
+                const el = document.createElement('div');
+                el.className = 'particle';
+                el.textContent = '+' + amount + ' HP';
+                el.style.cssText = `
+                left:${40 + Math.random() * 8}px;
+                bottom:130px;
+                position:fixed;
+                font-family:'Courier New',monospace;
+                font-size:13px;
+                font-weight:bold;
+                color:#44ff88;
+                text-shadow:0 0 8px rgba(68,255,136,0.8);
+                pointer-events:none;
+                z-index:70;
+                --tx:${(Math.random() - 0.5) * 20}px;
+                --ty:-50px;
+                animation:particleBurst 1.2s ease-out forwards;
+            `;
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1300);
             },
             // Floating leaves while running
             leaf() {
