@@ -1,25 +1,22 @@
 {
   "name": "project-ascend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Fitness adventure game — your body is the controller",
+  "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dichev-design/Project-Ascend.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/dichev-design/Project-Ascend/issues"
-  },
-  "homepage": "https://github.com/dichev-design/Project-Ascend#readme",
-  "devDependencies": {
-    "vite": "^7.3.1"
-  }
+  "license": "ISC"
 }
